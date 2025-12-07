@@ -1,7 +1,7 @@
 import streamlit as st
 
 st.set_page_config(page_title="Data Compression App", layout="wide", page_icon="📦")
-st.image("assets\home.png",width=200)
+st.image("assets/home.png",width=200)
 
 st.title("Data Compression Application")
 
