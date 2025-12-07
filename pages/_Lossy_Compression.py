@@ -12,17 +12,25 @@ level = st.slider("Quantization Level", 1, 100, 50)
 
 if uploaded_image is not None:
     original_image = load_image(uploaded_image)
-    st.image(original_image, caption="Original Image", use_column_width=True)
+
+    # Display original and compressed side by side
+    col1, col2 = st.columns(2)
+    with col1:
+        st.image(original_image, caption="Original Image", width=300)
 
     if st.button("Apply Quantization"):
         compressed_image = apply_quantization(original_image, level)
-        st.image(compressed_image, caption="Compressed Image", use_column_width=True)
 
+        with col2:
+            st.image(compressed_image, caption="Compressed Image", width=300)
+
+        # Metrics
         mse = calculate_mse(original_image, compressed_image)
         psnr = calculate_psnr(original_image, compressed_image)
         st.write(f"**MSE:** {mse:.2f}")
         st.write(f"**PSNR:** {psnr:.2f} dB")
 
+        # Save and download compressed image
         save_image(compressed_image, "compressed_image.png")
         with open("compressed_image.png", "rb") as f:
             st.download_button(
